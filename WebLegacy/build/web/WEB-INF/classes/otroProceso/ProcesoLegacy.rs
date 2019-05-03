@@ -1,0 +1,2 @@
+otroProceso.Connection
+otroProceso.ProcesoLegacy
