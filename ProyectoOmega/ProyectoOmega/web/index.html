@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+
+
+
+
+-->
+<html>
+    <head>
+        <title>Data Web Wizard</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <h1>Welcome to Data Web Wizard</h1>
+
+        Name:<input type="text" id="name" value="" />
+        Password:<input type="password" id="password" value="" />
+        <input type="button" value="Log-in" onclick="callRESTfulWebService(
+                        'logInStatus',
+                        'GET',
+                        'http://localhost:8080/ProyectoOmega/webresources/Operations',
+                        document.getElementById('name').value,
+                        document.getElementById('password').value)" />
+        
+        
+        <div id="logInStatus"></div>
+        
+
+        <script>
+
+        function callRESTfulWebService(id, method, target, nameUser, passUser) {        
+                var ajaxRequest;
+                if (window.XMLHttpRequest) {
+                    ajaxRequest = new XMLHttpRequest(); // IE7+, Firefox, Chrome, Opera, Safari
+                } else {
+                    ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP"); // IE6, IE5
+                }
+                ajaxRequest.onreadystatechange = function () {
+                    if (ajaxRequest.readyState == 4 &&
+                            (ajaxRequest.status == 200 || ajaxRequest.status == 404)) {
+
+                        document.getElementById(id).innerHTML = ajaxRequest.responseText;
+                    }
+                }
+                ajaxRequest.open(method, target + "?name=" + nameUser + "&password=" + passUser, true /*async*/);
+                //AQUI LO MANDAMOS EN XML?
+                ajaxRequest.setRequestHeader("Content-Type", "text/html");
+                ajaxRequest.send();
+            }
+        </script>
+
+
+        <div>Not yet a member?</div>
+        <form action="RegisterPage.jsp">
+            <input type="submit" value="Register" />
+        </form>
+    </body>
+</html>
